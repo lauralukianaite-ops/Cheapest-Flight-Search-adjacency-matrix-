@@ -42,22 +42,13 @@ void add_flight(Graph *g, char *from, char *to, int price){
     int from_idx = get_city_index(g, from);
     int to_idx = get_city_index(g, to);
 
-    g->adj_matrix[from_idx][to_idx] = price;
+    if (g->adj_matrix[from_idx][to_idx] == NO_FLIGHT || price < g->adj_matrix[from_idx][to_idx]) {
+        g->adj_matrix[from_idx][to_idx] = price;
+    }
 }
 
-void find_cheapest_route(Graph *g, char *start_city, char *end_city){
-
-    //randami miestų indeksai
-    int start_idx = -1, end_idx = -1;
-    for(int i=0; i<g->city_count; i++){
-        if (strcmp(g->cities[i].name, start_city) == 0) start_idx = i;
-        if (strcmp(g->cities[i].name, end_city) == 0) end_idx = i;
-    }
-
-    if (start_idx == -1 || end_idx == -1) {
-        printf("Klaida: Pradinis arba galinis miestas nerastas skrydziu sarase!\n");
-        return;
-    }
+FlightResult find_cheapest_route(Graph *g, int start_idx, int end_idx){
+    FlightResult res = {0};
 
     int dist[MAX_CITIES][MAX_CITIES];
     int next_node[MAX_CITIES][MAX_CITIES];
@@ -73,7 +64,7 @@ void find_cheapest_route(Graph *g, char *start_city, char *end_city){
         }
     }
 
-    //Floido-Varšalo algoritmas
+    //Floyd-Warshall algoritmas
     for(int k=0; k<g->city_count; k++){
         for(int i=0; i<g->city_count; i++){
             for(int j=0; j<g->city_count; j++){
@@ -86,17 +77,19 @@ void find_cheapest_route(Graph *g, char *start_city, char *end_city){
     }
 
     if (dist[start_idx][end_idx] == NO_FLIGHT) {
-        printf("Marsrutas iš %s į %s NEEGZISTUOJA.\n", start_city, end_city);
-    } else {
-        printf("Pigiausio skrydžio kaina iš %s į %s: %d EUR\n", start_city, end_city, dist[start_idx][end_idx]);
-        
-        printf("Maršrutas: %s", start_city);
-        int curr = start_idx;
-        while (curr != end_idx) {
-            curr = next_node[curr][end_idx];
-            printf(" -> %s", g->cities[curr].name);
-        }
-        printf("\n");
+        res.found = 0;
+        return res;
     }
 
+    res.found = 1;
+    res.total_cost = dist[start_idx][end_idx];
+
+    int curr = start_idx;
+    res.path[res.path_len++] = curr;
+    while (curr != end_idx) {
+        curr = next_node[curr][end_idx];
+        res.path[res.path_len++] = curr;
+    }
+
+    return res;
 }

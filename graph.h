@@ -15,9 +15,16 @@ typedef struct {
     int adj_matrix[MAX_CITIES][MAX_CITIES];
 } Graph;
 
+typedef struct {
+    int found;
+    int total_cost;
+    int path[MAX_CITIES];
+    int path_len;
+} FlightResult;
+
 void init_graph(Graph *g);
 int get_city_index(Graph *g, char *name);
 void add_flight(Graph *g, char *from, char *to, int price);
-void find_cheapest_route(Graph *g, char *start_city, char *end_city);
+FlightResult find_cheapest_route(Graph *g, int start_idx, int end_idx);
 
 #endif
