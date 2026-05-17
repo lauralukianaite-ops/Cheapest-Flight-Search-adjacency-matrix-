@@ -18,5 +18,6 @@ typedef struct {
 void init_graph(Graph *g);
 int get_city_index(Graph *g, char *name);
 void add_flight(Graph *g, char *from, char *to, int price);
+void find_cheapest_route(Graph *g, char *start_city, char *end_city);
 
 #endif

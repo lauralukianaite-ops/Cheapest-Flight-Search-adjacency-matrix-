@@ -7,24 +7,15 @@ int main(){
     Graph graph;
     init_graph(&graph);
 
-    int vilnius = get_city_index(&graph,"Vilnius");
-    int ryga = get_city_index(&graph,"Ryga");
-    int talinas = get_city_index(&graph,"Talinas");
-
-    int vilnius2 = get_city_index(&graph,"Vilnius");
-
     add_flight(&graph, "Vilnius", "Ryga", 50);
-    add_flight(&graph, "Ryga", "Talinas", 100);
-    add_flight(&graph, "Vilnius", "Talinas", 250);
+    add_flight(&graph, "Ryga", "Londonas", 100);
+    add_flight(&graph, "Vilnius", "Londonas", 250); 
+    add_flight(&graph, "Vilnius", "Kopenhaga", 70);
+    add_flight(&graph, "Kopenhaga", "Londonas", 60); 
+    add_flight(&graph, "Tokijas", "Pekinas", 180);
 
-    printf("Vilnius -> Ryga kaina: %d EUR (turi buti 50)\n", graph.adj_matrix[vilnius][ryga]);
-    printf("Ryga -> Londonas kaina: %d EUR (turi buti 100)\n", graph.adj_matrix[ryga][talinas]);
-    printf("Vilnius -> Londonas kaina: %d EUR (turi buti 250)\n", graph.adj_matrix[vilnius][talinas]);
-    printf("Londonas -> Vilnius kaina: %d (turi buti %d, nes skrydzio atgal nera)\n", 
-           graph.adj_matrix[talinas][vilnius], NO_FLIGHT);
-
-    printf("\nIs viso unikaliu miestu grafe: %d\n", graph.city_count);
-    
+    find_cheapest_route(&graph, "Vilnius", "Londonas");
+    find_cheapest_route(&graph, "Vilnius", "Tokijas");
 
     return 0;
 }
