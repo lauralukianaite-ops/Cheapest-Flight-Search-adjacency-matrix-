@@ -17,5 +17,6 @@ typedef struct {
 
 void init_graph(Graph *g);
 int get_city_index(Graph *g, char *name);
+void add_flight(Graph *g, char *from, char *to, int price);
 
 #endif

@@ -37,3 +37,10 @@ int get_city_index(Graph *g, char *name){
 
     return g->city_count -1;
 }
+
+void add_flight(Graph *g, char *from, char *to, int price){
+    int from_idx = get_city_index(g, from);
+    int to_idx = get_city_index(g, to);
+
+    g->adj_matrix[from_idx][to_idx] = price;
+}
