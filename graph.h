@@ -3,7 +3,7 @@
 
 #define MAX_CITIES 100
 #define MAX_NAME_LEN 50
-#define INF 999999
+#define NO_FLIGHT -1
 
 typedef struct {
     char name[MAX_NAME_LEN];
