@@ -1,4 +1,4 @@
-# 4 laboratonis darbas - Pigiausiojo skrydžio maršruto paieška
+# 4 laboratonis darbas - pigiausio skrydžio maršruto paieška
 
 Programa nuskaito lėktuvų skrydžių sąrašą ir randa pigiausią maršrutą tarp dviejų nurodytų miestų. Jei toks maršrutas neegzistuoja — apie tai pranešama.
 Grafo realizacija paremta **kaimynystės matrica**. Trumpiausio kelio paieškai naudojamas **Floyd-Warshall** algoritmas.
@@ -29,7 +29,7 @@ typedef struct {
 } Graph;
 ```
  
-Kaimynystės matricoje `adj_matrix[i][j]` saugo tiesioginį skrydžio kainą iš miesto `i` į miestą `j`. Jei tiesioginio skrydžio nėra, reikšmė yra `NO_FLIGHT`.
+Kaimynystės matricoje `adj_matrix[i][j]` saugo tiesioginę skrydžio kainą iš miesto `i` į miestą `j`. Jei tiesioginio skrydžio nėra, reikšmė yra `NO_FLIGHT`.
  
 ### `FlightResult` – paieškos rezultatas
 ```c
@@ -43,8 +43,8 @@ typedef struct {
 
 ## Algoritmas
 
-Maršruto paieškai naudojamas **Floyd-Warshall** algoritmas – dinaminio programavimo metodas, kuris randa trumpiausius (pigiausius) kelius tarp visų porų viršūnių.
- 
+Maršruto paieškai naudojamas **Floyd-Warshall** algoritmas.
+
 **Sudėtingumas:** O(n³), kur n – miestų skaičius.
  
 **Veikimo principas:**
@@ -75,9 +75,9 @@ for(int k = 0; k < g->city_count; k++)
 ```
 6
 Vilnius  Ryga       80
-Vilnius  Varšuva    60
+Vilnius  Oslas      60
 Ryga     Talinas    50
-Varšuva  Berlynas   90
+Oslas    Berlynas   90
 Ryga     Berlynas  120
 Talinas  Berlynas   70
 Vilnius
@@ -119,18 +119,18 @@ Flights.exe
 ### Maršrutas rastas
  
 ```
-Kaimynystes matrica (6 miestu):
+Kaimynystes matrica (6 miestų):
  
-                    Vilnius       Ryga    Talinas   Varšuva  Berlynas
+                    Vilnius       Ryga    Talinas    Oslas     Berlynas
 Vilnius                   0         80          -        60         -
 Ryga                      -          0         50          -       120
 Talinas                   -          -          0          -        70
-Varšuva                   -          -          -          0        90
+Oslas                     -          -          -          0        90
 Berlynas                  -          -          -          -         0
  
-Marsrutas: Vilnius -> Berlynas
-Pigiausia kaina: 200
-Kelias: Vilnius -> Ryga -> Talinas -> Berlynas
+Maršrutas: Vilnius -> Berlynas
+Pigiausia kaina: 150
+Kelias: Vilnius -> Oslas -> Berlynas
 ```
  
 ### Maršrutas nerastas
@@ -148,7 +148,7 @@ Tokio marsruto nera.
  
 | Failas        | Aprašymas                                              | Rezultatas        |
 |---------------|--------------------------------------------------------|-------------------|
-| `flights.cfg` | 6 skrydžiai, Vilnius → Berlynas per Rygą ir Taliną    | `result1.txt`     |
-| `Flights.cfg` | 5 skrydžiai, Kaunas → Paryžius per Varšuvą            | `result2.txt`     |
-| `nopath.cfg`  | 2 skrydžiai, Vilnius → Berlynas (jungtys neegzistuoja)| `result3.txt`     |
+| `flights.cfg` | 6 skrydžiai, Vilnius → Berlynas per Oslą               | `result1.txt`     |
+| `Flights.cfg` | 5 skrydžiai, Kaunas → Berlynas per Taliną              | `result2.txt`     |
+| `nopath.cfg`  | 2 skrydžiai, Vilnius → Berlynas (jungtys neegzistuoja) | `result3.txt`     |
  
